@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function Film(props) {
   const [movie, setMovie] = useState();
-
-  let id = 1;
+  const {film_id}=useParams();
+  let id =film_id ;
+  console.log("id:--",id);
   // URL'den alınan :id parametresini bu değişkene aktarın
 
   useEffect(() => {
@@ -13,13 +15,15 @@ export default function Film(props) {
       .then(response => {
           // Bu kısmı log statementlarıyla çalışın
           // ve burdan gelen response'u 'movie' e aktarın
+          console.log("en son ---",response.data);
+          setMovie(response.data);
       })
       .catch(error => {
         console.error(error);
       });
     // Bu effect her `id ` değiştiğinde çalışmalı
     // Bunu nasıl gerçekleştirebiliriz?
-  }, []);
+  }, [id]);
 
   // Yalnızca esnek görevlere geçtiğinizde burdaki yorum etiketini kaldırın
   // const filmiKaydet = evt => { }
@@ -33,6 +37,7 @@ export default function Film(props) {
   return (
     <div className="save-wrapper">
       <div className="movie-card">
+        
         <h2>{title}</h2>
         <div className="movie-director">
           Director: <em>{director}</em>
