@@ -4,7 +4,7 @@ import axios from "axios";
 import KaydedilenlerListesi from "./Filmler/KaydedilenlerListesi";
 
 import FilmListesi from "./Filmler/FilmListesi";
-import Film from "./Filmler/Film"
+import Film from "./Filmler/RamFilm"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import FilmCard from "./Filmler/FilmCard";
 
@@ -29,26 +29,28 @@ export default function App() {
     FilmleriAl();
   }, []);
 
-  const KaydedilenlerListesineEkle = (id) => {
+  const KaydedilenlerListesineEkle = (movie) => {
     // Burası esnek. Aynı filmin birden fazla kez "saved" e eklenmesini engelleyin
+    if(!saved.includes(movie)){
+      setSaved([...saved,movie]);
+    }
+    
   };
 
   return (
     <Router>
       <KaydedilenlerListesi
-        list={
-          [
-            /* Burası esnek */
-          ]
-        }
+        list={saved}
+          
+        
       />
       <div>
         <Switch>
           <Route path="/" exact>
             <FilmListesi filmListesi={movieList} />
           </Route>
-          <Route path="/filimler/:film_id" exact>
-            <Film />
+          <Route path="/filmler/:film_id" exact>
+            <FilmCard kaydet={KaydedilenlerListesineEkle} />
           </Route>
         </Switch>
 

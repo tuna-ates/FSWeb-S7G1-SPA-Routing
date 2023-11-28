@@ -1,13 +1,16 @@
 import React from 'react';
 import FilmCard from "./FilmCard"
+import { Link } from 'react-router-dom';
 export default function FilmListesi(props) {
    const {filmListesi}=props
   return (
    
     <div className="movie-list">
       {filmListesi.map(movie => (
-         
-        <FilmCard key={movie.id} movie={movie} />
+         <Link to={`/filmler/${movie.id}`} >
+         <FilmCard key={movie.id} film={movie} />
+         </Link>
+        
        
       ))}
     </div>
